@@ -1,0 +1,62 @@
+kind: pipeline
+name: default
+
+steps:
+- name: lint
+  image: golangci/golangci-lint:v1.23.3
+  environment:
+    GOFLAGS: -mod=vendor
+  commands:
+    - golangci-lint --version
+    - golangci-lint run -v
+
+- name: build
+  image: golang:1.13
+  environment:
+    GOFLAGS: -mod=vendor
+  commands:
+  - go build
+
+---
+kind: pipeline
+name: release
+
+trigger:
+  event:
+  - tag
+
+volumes:
+- name: slack_message
+  temp: {}
+
+steps:
+- name: artifacts
+  image: golang:1.13
+  commands:
+  - ./build_artifacts.sh
+
+- name: publish
+  image: plugins/github-release
+  settings:
+    api_key:
+      from_secret: github_token
+    files: dist/*
+    checksum:
+    - md5
+    - sha512
+    draft: true
+    overwrite: true
+    title: Fruit-Pi Terraform Provider ${DRONE_TAG}
+
+- name: release-message
+  image: debian:bullseye-slim
+  environment:
+    GITHUB_TOKEN:
+      from_secret: github_token
+  volumes:
+  - name: slack_message
+    path: /slack_message
+  when:
+    status: [success]
+  commands:
+  - ./release_message.sh
