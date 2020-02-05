@@ -3,11 +3,10 @@ name: default
 
 steps:
 - name: lint
-  image: golang:1.13
+  image: golangci/golangci-lint:v1.23.3
   commands:
-    - go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
     - golangci-lint --version
-    - golangci-lint run --config .golangci-lint.yml
+    - golangci-lint run -v
 
 - name: build
   image: golang:1.13
