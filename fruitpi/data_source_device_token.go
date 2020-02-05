@@ -41,7 +41,7 @@ func dataSourceDeviceTokenRead(d *schema.ResourceData, m interface{}) error {
 		return errors.New("did not obtain token")
 	}
 
-	d.Set("token", *device.Token)
+	setData(d, "token", *device.Token)
 	d.SetId(uuid)
 	return nil
 }
