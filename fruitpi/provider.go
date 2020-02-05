@@ -8,7 +8,7 @@ import (
 	"github.com/xanderflood/fruit-pi-server/lib/api"
 )
 
-//Provider is the entrypoint to the thetradedesk provider
+//Provider is the entrypoint to the fruitpi provider
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		Schema: map[string]*schema.Schema{
