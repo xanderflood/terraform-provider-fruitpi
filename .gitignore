@@ -13,7 +13,6 @@
 
 .env
 .docker.env
-vendor/
 
 *.tfvars*
 *.tfstate*
