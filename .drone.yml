@@ -4,8 +4,6 @@ name: default
 steps:
 - name: lint
   image: golang:1.13
-  environment:
-    GOPATH: /
   commands:
     - go get -u github.com/golangci/golangci-lint/cmd/golangci-lint
     - golangci-lint --version
@@ -13,8 +11,6 @@ steps:
 
 - name: build
   image: golang:1.13
-  environment:
-    GOFLAGS: -mod=vendor
   commands:
   - go build
 
