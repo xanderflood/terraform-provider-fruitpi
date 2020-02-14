@@ -6,7 +6,7 @@ rm -rf terraform.d/
 
 export CGO_ENABLED=0
 export GOARCH=amd64
-export GOFLAGS="-mod=vendor -a -installsuffix cgo"
+export GOFLAGS="-mod=vendor -a -installsuffix=cgo"
 
 # build for each OS
 mkdir -p terraform.d/plugins/darwin_amd64
